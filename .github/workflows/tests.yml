@@ -45,7 +45,7 @@ jobs:
       - run:   echo "$OUTPUTS"
         shell: bash
         env:
-         OUTPUTS: ${{ toJSON(steps.run_default_test.outputs) }}
+         OUTPUTS: ${{ steps.run_default_test.outputs }}
 
       - name: what is output?
         run: echo $GITHUB_OUTPUT
