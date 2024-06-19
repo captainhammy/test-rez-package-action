@@ -42,7 +42,7 @@ jobs:
         with:
           package_root: ./tests/test_package
 
-      - run:   echo ${{ steps.run_default_test.outputs }}
+      - run:   echo ${{ toJSON(steps.run_default_test.outputs) }}
         shell: bash
 
       - name: what is output?
