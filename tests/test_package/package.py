@@ -7,7 +7,7 @@ build_system = "cmake"
 
 # Pass -c to pytest, so it doesn't try and load the pyproject.toml from the parent folder
 tests = {
-    "unit": {"command": "python -m pytest -c tests/", "requires": ["pytest"]},
+    "unit": {"command": "python -m pytest tests/", "requires": ["pytest"]},
     "specific": {"command": "python -m pytest -c tests/", "requires": ["pytest"]},
 }
 
