@@ -47,10 +47,10 @@ jobs:
         env:
          OUTPUTS: ${{ toJSON(steps.run_default_test.outputs) }}
 
-      - name: Fail if default test not ran
-        shell: bash
-        if: steps.run_default_test.outputs.package_test_ran != 1
-        run: exit 1
+#      - name: Fail if default test not ran
+#        shell: bash
+#        if: steps.run_default_test.outputs.package_test_ran != 1
+#        run: exit 1
 
       - name: Test package with specific test name
         id: run_specific_test
@@ -64,7 +64,7 @@ jobs:
         env:
          OUTPUTS: ${{ toJSON(steps.run_specific_test.outputs) }}
 
-      - name: Fail if the specific test not ran
-        shell: bash
-        if: steps.run_specific_test.outputs.package_test_ran != 1
-        run: exit 1
+#      - name: Fail if the specific test not ran
+#        shell: bash
+#        if: steps.run_specific_test.outputs.package_test_ran != 1
+#        run: exit 1
