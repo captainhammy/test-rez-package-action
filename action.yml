@@ -25,7 +25,6 @@ runs:
         rez python ${GITHUB_ACTION_PATH}/determine_package_name.py
 
     - name: Run package tests
-      id: run-package-tests
       shell: bash
       run: |
         cd ${{ inputs.package_root }}
