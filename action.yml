@@ -34,4 +34,4 @@ runs:
     - run: echo "$OUTPUTS"
       shell: bash
       env:
-       OUTPUTS: ${{ toJSON(steps.run_default_test.outputs) }}
+       OUTPUTS: ${{ toJSON(steps.run-package-tests.outputs) }}
