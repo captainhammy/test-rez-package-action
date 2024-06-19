@@ -12,7 +12,7 @@ jobs:
       matrix:
         houdini-version:
           - "19.5"  # Python 3.9
-          # - "20.0"  # Python 3.10
+          - "20.0"  # Python 3.10
 
     container:
       image: captainhammy/hython-runner:${{ matrix.houdini-version }}
@@ -23,11 +23,11 @@ jobs:
 
       # Unit Tests
 
-#      - name: Install unit test dependencies
-#        run: python -m pip install tox tox-gh-actions
+      - name: Install unit test dependencies
+        run: python -m pip install tox tox-gh-actions
 
-#      - name: Test with tox
-#        run: tox
+      - name: Test with tox
+        run: tox
 
       # Integration tests
 
@@ -42,33 +42,9 @@ jobs:
         with:
           package_root: ./tests/test_package
 
-      - run:   echo "$OUTPUTS"
-        shell: bash
-        env:
-         OUTPUTS: ${{ toJSON(steps.run_default_test.outputs) }}
-
-      - name: what is output?
-        run: echo $GITHUB_OUTPUT
-        shell: bash
-
-#      - name: Fail if default test not ran
-#        shell: bash
-#        if: steps.run_default_test.outputs.package_test_ran != 1
-#        run: exit 1
-
       - name: Test package with specific test name
         id: run_specific_test
         uses: ./
         with:
           test_name: specific
           package_root: ./tests/test_package
-
-      - run:   echo "$OUTPUTS"
-        shell: bash
-        env:
-         OUTPUTS: ${{ toJSON(steps.run_specific_test.outputs) }}
-
-#      - name: Fail if the specific test not ran
-#        shell: bash
-#        if: steps.run_specific_test.outputs.package_test_ran != 1
-#        run: exit 1
