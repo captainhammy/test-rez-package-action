@@ -30,8 +30,3 @@ runs:
       run: |
         cd ${{ inputs.package_root }}
         rez test ${{ steps.get-package-name.outputs.package_name }} ${{ inputs.test_name }}
-
-    - run: echo "$OUTPUTS"
-      shell: bash
-      env:
-       OUTPUTS: ${{ toJSON(steps.run-package-tests.outputs) }}
