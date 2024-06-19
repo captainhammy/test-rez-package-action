@@ -42,10 +42,8 @@ jobs:
         with:
           package_root: ./tests/test_package
 
-      - run:   echo "$OUTPUTS"
+      - run:   echo ${{ steps.run_default_test.outputs }}
         shell: bash
-        env:
-         OUTPUTS: ${{ steps.run_default_test.outputs }}
 
       - name: what is output?
         run: echo $GITHUB_OUTPUT
