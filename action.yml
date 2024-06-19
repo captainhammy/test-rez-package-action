@@ -25,7 +25,13 @@ runs:
         rez python ${GITHUB_ACTION_PATH}/determine_package_name.py
 
     - name: Run package tests
+      id: run-package-tests
       shell: bash
       run: |
         cd ${{ inputs.package_root }}
         rez test ${{ steps.get-package-name.outputs.package_name }} ${{ inputs.test_name }}
+
+    - run: echo "$OUTPUTS"
+      shell: bash
+      env:
+       OUTPUTS: ${{ toJSON(steps.run_default_test.outputs) }}
