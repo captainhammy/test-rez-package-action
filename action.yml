@@ -1,0 +1,31 @@
+name: "Test Rez Package"
+description: "Test a Rez package locally."
+branding:
+  icon: "arrow-up-right"
+  color: "orange"
+inputs:
+  test_name:
+    description: Optional test name
+    default: 'unit'
+    required: false
+
+  package_root:
+    description: The package root directory (containing the package.py)
+    default: '.'
+    required: false
+runs:
+  using: "composite"
+
+  steps:
+    - name: Get package name from package.py
+      id: get-package-name
+      shell: bash
+      run: |
+        cd ${{ inputs.package_root }}
+        rez python ${GITHUB_ACTION_PATH}/determine_package_name.py
+
+    - name: Run package tests
+      shell: bash
+      run: |
+        cd ${{ inputs.package_root }}
+        rez test ${{ steps.get-package-name.outputs.package_name }} ${{ inputs.test_name }}
