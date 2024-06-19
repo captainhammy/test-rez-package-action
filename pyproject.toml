@@ -1,7 +1,7 @@
 
 [tool.pytest.ini_options]
     pythonpath = "."
-    addopts = "--cov --cov-report=html --cov-report=xml --cov-fail-under=100 --color=yes"
+    addopts = "--cov --cov-report=html --cov-report=xml --cov-fail-under=100 --color=yes -vv -s"
 
 [tool.isort]
     profile = "black"
