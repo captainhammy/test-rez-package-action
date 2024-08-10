@@ -11,7 +11,7 @@ def test_set_output():
     This doesn't really do much since we don't export the outputs from the action
     itself.
     """
-    output_path = pathlib.Path(os.environ["TEST_TEMP_DIR"]) / "unit.txt"
+    output_path = pathlib.Path(os.environ["TEST_FILE"])
     output_path.unlink(missing_ok=True)
     output_path.parent.mkdir(parents=True, exist_ok=True)
 

@@ -41,7 +41,7 @@ jobs:
         id: run_default_test
         uses: ./
         env:
-          TEST_TEMP_DIR: ${{ runner.temp }}/results
+          TEST_FILE: ${{ runner.temp }}/results/unit.txt
         with:
           package_root: ./tests/test_package
 
@@ -57,7 +57,7 @@ jobs:
         id: run_specific_test
         uses: ./
         env:
-          TEST_TEMP_DIR: ${{ runner.temp }}/results
+          TEST_FILE: ${{ runner.temp }}/results/specific.txt
         with:
           test_name: specific
           package_root: ./tests/test_package
