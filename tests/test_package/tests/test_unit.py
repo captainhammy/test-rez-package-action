@@ -12,7 +12,8 @@ def test_set_output():
     itself.
     """
     output_path = pathlib.Path(os.environ["TEST_TEMP_DIR"]) / "unit.txt"
+    output_path.unlink(missing_ok=True)
     output_path.parent.mkdir(parents=True, exist_ok=True)
 
-    with output_path.open("a", encoding="utf-8") as fp:
+    with output_path.open("w", encoding="utf-8") as fp:
         fp.write("package_test_ran=1\n")
