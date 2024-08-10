@@ -5,10 +5,10 @@ version = "0.0.1"
 
 build_system = "cmake"
 
-# Pass -c to pytest, so it doesn't try and load the pyproject.toml from the parent folder
+# Pass '-c /dev/null' to pytest, so it doesn't try and load the pyproject.toml from the parent folder
 tests = {
-    "unit": {"command": "python -m pytest -c tests/test_unit.py", "requires": ["pytest"]},
-    "specific": {"command": "python -m pytest -c tests/test_specific.py", "requires": ["pytest"]},
+    "unit": {"command": "python -m pytest -c /dev/null tests/test_unit.py", "requires": ["pytest"]},
+    "specific": {"command": "python -m pytest -c /dev/null tests/test_specific.py", "requires": ["pytest"]},
 }
 
 

@@ -7,6 +7,8 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    env:
+      TEST_TEMP_DIR: ${{ runner.temp }}/results
 
     strategy:
       matrix:
@@ -40,30 +42,28 @@ jobs:
       - name: Test package with default test name
         id: run_default_test
         uses: ./
-        env:
-          TEST_TEMP_DIR: ${{ runner.temp }}/results
+
         with:
           package_root: ./tests/test_package
 
       - name: Verify default (unit) test ran
         env:
-          TEST_FILE: ${{ runner.temp }}/results/unit.txt
+          TEST_FILE: ${{ env.TEST_TEMP_DIR }}/unit.txt
         run: |
           if ! test -f $TEST_FILE; then
             exit 1
           fi
+
       - name: Test package with specific test name
         id: run_specific_test
         uses: ./
-        env:
-          TEST_TEMP_DIR: ${{ runner.temp }}/results
         with:
           test_name: specific
           package_root: ./tests/test_package
 
       - name: Verify the specific test ran
         env:
-          TEST_FILE: ${{ runner.temp }}/results/specific.txt
+          TEST_FILE: ${{ env.TEST_TEMP_DIR }}/specific.txt
         run: |
           if ! test -f $TEST_FILE; then
             exit 1
