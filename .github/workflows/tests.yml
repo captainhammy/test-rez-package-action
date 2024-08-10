@@ -11,8 +11,9 @@ jobs:
     strategy:
       matrix:
         houdini-version:
-          - "19.5"  # Python 3.9
-          - "20.0"  # Python 3.10
+          - "19.5"
+          - "20.0"
+          - "20.5"
 
     container:
       image: captainhammy/hython-runner:${{ matrix.houdini-version }}
@@ -32,19 +33,39 @@ jobs:
       # Integration tests
 
       - name: Build package
-        uses: captainhammy/build-rez-package-action@v1.0
+        uses: captainhammy/build-rez-package-action@v1
         with:
           package_root: ./tests/test_package
 
       - name: Test package with default test name
         id: run_default_test
         uses: ./
+        env:
+          TEST_FILE: ${{ runner.temp }}/results/unit.txt
         with:
           package_root: ./tests/test_package
+
+      - name: Verify default (unit) test ran
+        env:
+          TEST_FILE: ${{ runner.temp }}/results/unit.txt
+        run: |
+          if ! test -f $TEST_FILE; then
+            exit 1
+          fi
 
       - name: Test package with specific test name
         id: run_specific_test
         uses: ./
+        env:
+          TEST_FILE: ${{ runner.temp }}/results/specific.txt
         with:
           test_name: specific
           package_root: ./tests/test_package
+
+      - name: Verify the specific test ran
+        env:
+          TEST_FILE: ${{ runner.temp }}/results/specific.txt
+        run: |
+          if ! test -f $TEST_FILE; then
+            exit 1
+          fi
