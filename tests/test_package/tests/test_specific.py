@@ -6,11 +6,7 @@ import pathlib
 
 
 def test_set_output():
-    """Write to output data.
-
-    This doesn't really do much since we don't export the outputs from the action
-    itself.
-    """
+    """Write to output data."""
     output_path = pathlib.Path(os.environ["TEST_FILE"])
     output_path.unlink(missing_ok=True)
     output_path.parent.mkdir(parents=True, exist_ok=True)
