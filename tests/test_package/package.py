@@ -14,4 +14,3 @@ tests = {
 
 def commands():
     """Run commands."""
-    pass

@@ -1,7 +1,66 @@
+[project]
+name = "test-rez-package-action"
 
-[tool.pytest.ini_options]
-    pythonpath = "."
-    addopts = "--cov --cov-report=html --cov-report=xml --cov-fail-under=100 --color=yes"
+dependencies = [
+    "rez"
+]
+
+[dependency-groups]
+    deps = ["rez"]
+    docstrings = ["pydocstringformatter"]
+    github = ["coverage", "tox"]
+    isort = ["isort"]
+    mypy = ["mypy[toml]"]
+    ruff = ["ruff"]
+    test = ["pytest", "pytest-cov", "pytest_datadir", "pytest-mock"]
+    test_install_deps = ["markdown-pytest"]
+
+[tool.tox]
+    env_list = ["run-tests", "ruff-check", "ruff-format-check", "isort-check", "mypy", "docstring-check"]
+    labels = {test = ["run-tests"], static = ["ruff-check", "ruff-format-check", "isort-check", "mypy", "docstring-check"], fix = ["ruff-format-fix", "isort-run", "docstring-run"] }
+    no_package = true
+
+    [tool.tox.env.run-tests]
+        allowlist_externals = ["echo"]
+        dependency_groups = ["deps", "test"]
+        set_env = {PYTHONPATH = "{toxinidir}:{envsitepackagesdir}"}
+        commands = [["pytest", "tests/python/"]]
+        commands_post = [["echo", "View test coverage report at file://{toxinidir}/coverage_html_report/index.html"]]
+
+    [tool.tox.env.ruff-check]
+        dependency_groups = ["ruff"]
+        commands = [[ "ruff", "check", "--preview", "determine_package_name.py", "tests/python/"]]
+
+    [tool.tox.env.ruff-format-check]
+        dependency_groups = ["ruff"]
+        commands = [[ "ruff", "format", "--preview", "--check", "--diff", "determine_package_name.py", "tests/python/"]]
+
+    [tool.tox.env.ruff-format-fix]
+        dependency_groups = ["ruff"]
+        commands = [[ "ruff", "format", "--preview", "determine_package_name.py", "tests/python/"]]
+
+    [tool.tox.env.isort-check]
+        dependency_groups = ["isort"]
+        commands = [[ "isort", "--check", "determine_package_name.py", "tests/python/"]]
+
+    [tool.tox.env.isort-run]
+        dependency_groups = ["isort"]
+        commands = [[ "isort", "determine_package_name.py", "tests/python/"]]
+
+    [tool.tox.env.mypy]
+        dependency_groups = ["deps", "mypy"]
+        commands = [[ "mypy"]]
+
+    [tool.tox.env.docstring-check]
+        dependency_groups = ["docstrings"]
+        commands = [[ "pydocstringformatter", "--exit-code", "determine_package_name.py"]]
+
+    [tool.tox.env.docstring-run]
+        dependency_groups = ["docstrings"]
+        commands = [[ "pydocstringformatter", "--write", "determine_package_name.py"]]
+
+[tool.pytest]
+    addopts = ["--cov", "--cov-report=html", "--cov-report=xml", "--cov-fail-under=100", "--color=yes"]
 
 [tool.isort]
     profile = "black"
@@ -98,7 +157,6 @@
             "D104",  # Missing docstring in public module
             "D105",  # Missing docstring in magic method
             "D107",  # Missing docstring in __init__
-            "PT004",  # Fixtures not returning anything not starting with _
         ]
 
     [tool.ruff.lint.per-file-ignores]

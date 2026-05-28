@@ -17,6 +17,11 @@ runs:
   using: "composite"
 
   steps:
+    - id: install_deps
+      name: Install Dependencies
+      shell: bash
+      run: python3 -m pip install --group deps
+
     - name: Get package name from package.py
       id: get-package-name
       shell: bash
